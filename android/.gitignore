@@ -1,0 +1,12 @@
+
+# Android/IntelliJ
+build/
+app/build/
+.idea
+.gradle
+local.properties
+*.iml
+app/app.iml
+appkey.properties
+/ydk/src/main/assets/ShareSDK.xml
+*.hprof

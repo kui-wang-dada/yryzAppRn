@@ -1,0 +1,1 @@
+let sourceDirs = ['js/components/containers/TransitionPage/assets']

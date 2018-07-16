@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"baseUrl": "./",
+		"paths": {
+			"@components": ["./src/components"],
+			"@components/*": ["./src/components/*"],
+			"@services/*": ["./src/services/*"],
+			"@services": ["./src/services"],
+			"@utils/*": ["./src/utils/*"],
+			"@utils": ["./src/utils"],
+			"@modules/*": ["./src/modules/*"],
+			"@modules": ["./src/modules"],
+			"@src/*": ["./src/*"],
+			"@src": ["./src"],
+			"@native-modules/*": ["././src/native_modules*"],
+			"@native-modules": ["././src/native_modules"],
+		}
+	},
+	"exclude": [
+		"node_modules"
+	]
+	// "include": ["./ydk/"]
+
+}

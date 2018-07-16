@@ -1,0 +1,55 @@
+
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
+inhibit_all_warnings!
+target 'yryzApp' do
+
+  pod 'ShareSDK3'
+  pod 'MOBFoundation'
+  pod 'ShareSDK3/ShareSDKPlatforms/QQ'
+  pod 'ShareSDK3/ShareSDKPlatforms/SinaWeibo'
+  pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
+  pod 'Bugly'
+  pod 'AliyunOSSiOS', '~> 2.6.3'
+  pod 'MBProgressHUD', '~> 1.0.0'
+  pod 'YYKit'
+  
+  pod 'UMCCommon'       #友盟统计
+  pod 'UMCAnalytics'
+  pod 'UMCSecurityPlugins'
+  
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
+    'RCTImage',
+    'RCTNetwork',
+    'RCTText',
+    'RCTWebSocket',
+    'RCTAnimation',
+    'DevSupport',
+    'CxxBridge'
+  ]
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs'
+
+  # ydk
+  pod 'ydk-ios', :path => '../node_modules/ydk-ios'
+  pod 'ydk-react-native', :path => '../node_modules/ydk-react-native'
+
+end
+
+# Archive时工程中Libraries中的.a文件与Pods中头文件冲突解决方案
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if target.name == "React"
+            target.remove_from_project
+        end
+    end
+end
+
+# 解决pod update时警告：[!] [Xcodeproj] Generated duplicate UUIDs:
+install! 'cocoapods', :deterministic_uuids => false
+
+

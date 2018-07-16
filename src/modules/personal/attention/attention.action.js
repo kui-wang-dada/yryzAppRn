@@ -1,0 +1,8 @@
+export const LOAD_USER = 'loadUserAttention'
+export const ADD_USER = 'addUserAttention'
+export const DELETE_USER = 'deleteUserAttention'
+export const CLEAR_USER = 'clearUserAttention'
+export const LOAD_SQUARE = 'loadSquareAttention'
+export const ADD_SQUARE = 'addSquareAttention'
+export const DELETE_SQUARE = 'deleteSquareAttention'
+export const CLEAR_SQUARE = 'clearSquareAttention'

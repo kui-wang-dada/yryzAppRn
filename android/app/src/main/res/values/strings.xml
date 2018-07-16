@@ -1,0 +1,6 @@
+<resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey"></string>
+    <string name="app_name">悠然一指</string>
+    <string name="update_new_version">版本更新</string>
+    <string name="update_next">下次再说</string>
+</resources>

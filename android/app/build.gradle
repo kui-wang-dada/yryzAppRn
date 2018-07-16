@@ -1,0 +1,290 @@
+apply plugin: "com.android.application"
+/**
+ * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
+ * and bundleReleaseJsAndAssets).
+ * These basically call `react-native bundle` with the correct arguments during the Android build
+ * cycle. By default, bundleDebugJsAndAssets is skipped, as in debug/dev mode we prefer to load the
+ * bundle directly from the development server. Below you can see all the possible configurations
+ * and their defaults. If you decide to add a configuration block, make sure to add it before the
+ * `apply from: "../../node_modules/react-native/react.gradle"` line.
+ *
+ * project.ext.react = [
+ *   // the name of the generated asset file containing your JS bundle
+ *   bundleAssetName: "index.android.bundle",
+ *
+ *   // the entry file for bundle generation
+ *   entryFile: "index.android.js",
+ *
+ *   // whether to bundle JS and assets in debug mode
+ *   bundleInDebug: false,
+ *
+ *   // whether to bundle JS and assets in release mode
+ *   bundleInRelease: true,
+ *
+ *   // whether to bundle JS and assets in another build variant (if configured).
+ *   // See http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Build-Variants
+ *   // The configuration property can be in the following formats
+ *   //         'bundleIn${productFlavor}${buildType}'
+ *   //         'bundleIn${buildType}'
+ *   // bundleInFreeDebug: true,
+ *   // bundleInPaidRelease: true,
+ *   // bundleInBeta: true,
+ *
+ *   // whether to disable dev mode in custom build variants (by default only disabled in release)
+ *   // for example: to disable dev mode in the staging build type (if configured)
+ *   devDisabledInStaging: true,
+ *   // The configuration property can be in the following formats
+ *   //         'devDisabledIn${productFlavor}${buildType}'
+ *   //         'devDisabledIn${buildType}'
+ *
+ *   // the root of your project, i.e. where "package.json" lives
+ *   root: "../../",
+ *
+ *   // where to put the JS bundle asset in debug mode
+ *   jsBundleDirDebug: "$buildDir/intermediates/assets/debug",
+ *
+ *   // where to put the JS bundle asset in release mode
+ *   jsBundleDirRelease: "$buildDir/intermediates/assets/release",
+ *
+ *   // where to put drawable resources / React Native assets, e.g. the ones you use via
+ *   // require('./image.png')), in debug mode
+ *   resourcesDirDebug: "$buildDir/intermediates/res/merged/debug",
+ *
+ *   // where to put drawable resources / React Native assets, e.g. the ones you use via
+ *   // require('./image.png')), in release mode
+ *   resourcesDirRelease: "$buildDir/intermediates/res/merged/release",
+ *
+ *   // by default the gradle tasks are skipped if none of the JS files or assets change; this means
+ *   // that we don't look at files in android/ or ios/ to determine whether the tasks are up to
+ *   // date; if you have any other folders that you want to ignore for performance reasons (gradle
+ *   // indexes the entire tree), add them here. Alternatively, if you have JS files in android/
+ *   // for example, you might want to remove it from here.
+ *   inputExcludes: ["android/**", "ios/**"],
+ *
+ *   // override which node gets called and with what additional arguments
+ *   nodeExecutableAndArgs: ["node"],
+ *
+ *   // supply additional arguments to the packager
+ *   extraPackagerArgs: []
+ * ]
+ */
+
+project.ext.react = [
+        entryFile: "index.js"
+]
+
+apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+
+/**
+ * Set this to true to create two separate APKs instead of one:
+ *   - An APK that only works on ARM devices
+ *   - An APK that only works on x86 devices
+ * The advantage is the size of the APK is reduced by about 4MB.
+ * Upload all the APKs to the Play Store and people will download
+ * the correct one based on the CPU architecture of their device.
+ */
+def enableSeparateBuildPerCPUArchitecture = false
+
+/**
+ * Run Proguard to shrink the Java bytecode in release builds.
+ */
+def enableProguardInReleaseBuilds = true
+
+/**
+ * 获取版本号
+ * @return versionCode
+ */
+def gitVersionCode() {
+    def cmd = "git rev-list HEAD --count"
+    version = cmd.execute().text.trim().toInteger()
+    println("versionCode:" + version)
+    version = version + 13000;
+//    return version;
+    return 1;
+}
+
+/**
+ * 获取版本名称
+ * @return versionName
+ */
+def gitVersionName(String buildType) {
+//    def buildTime = new Date();
+//    def versionName = "3.2.0."+buildTime.getTime();
+    return "4.5.0"
+}
+
+
+android {
+    configurations.all {
+        resolutionStrategy.force 'com.facebook.react:react-native:0.55.4'
+    }
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.rz.rz_rrz"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionName gitVersionName("")
+        versionCode gitVersionCode()
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "",
+                APP_CHANNEL : "default"
+        ]
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storePassword MYAPP_RELEASE_STORE_PASSWORD
+            keyAlias MYAPP_RELEASE_KEY_ALIAS
+            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
+        debug {
+            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storePassword MYAPP_RELEASE_STORE_PASSWORD
+            keyAlias MYAPP_RELEASE_KEY_ALIAS
+            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
+    }
+
+    splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include "armeabi", "armeabi-v7a", "x86"
+        }
+    }
+    aaptOptions { cruncherEnabled = false }
+
+    def Ids = rootProject.ext.ydk
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    JPUSH_APPKEY: Ids.jpushAppKey,
+                    UMENG_APPKEY: Ids.umeng.appKey,
+                    APP_CHANNEL : 'default'
+            ]
+        }
+        release.initWith(buildTypes.debug)
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+
+    }
+
+    def json = rootProject.ext.ydk
+    //打包配置
+    applicationVariants.all { variant ->
+        def versionCode = gitVersionCode();
+        def versionName = gitVersionName('');
+        variant.mergedFlavor.versionCode = versionCode
+        variant.mergedFlavor.versionName = versionName
+        if (variant.buildType.name.equals('release')) {
+            variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/apk")
+            variant.outputs.all { output ->
+                //获取签名的名字 variant.signingConfig.name
+                //要被替换的源字符串
+                def sourceFile = "-${variant.flavorName}-${variant.buildType.name}"
+                //替换的字符串
+//                def replaceFile = "_V${variant.versionName}_${variant.flavorName}_${variant.buildType.name}_${buildTime()}"
+                def replaceFile = "${json.env}-${variant.buildType.name}-${variant.flavorName}-${versionName}-${versionCode}"
+                outputFileName = output.outputFile.name.replace(sourceFile, replaceFile).replace('app', '');
+                //遗留问题：如何获取当前module的name，如CodeBook这个名字怎么获取到
+            }
+        }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "8g"
+        jumboMode true
+    }
+
+    publishNonDefault true
+    flavorDimensions "default"
+
+    //渠道包
+    productFlavors {
+
+        //bugly
+        yryz_bugly {
+            dimension "default"
+            manifestPlaceholders = [CHANNEL: "YRYZAPP-BUGLY"]
+            buildConfigField "String", "serverChannel", "\"YRYZAPP-BUGLY\""
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion rootProject.ext.supportVersion
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compile project(':react-native-svg')
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':react-native-rk-pull-to-refresh')
+    compile project(':ydk-react-native')
+    compile project(':react-native-linear-gradient')
+    compile project(':react-native-code-push')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:multidex:1.0.3'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    // 如果你需要支持GIF动图
+    compile 'com.facebook.fresco:animated-gif:1.3.0'
+    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.facebook.react:react-native:+'
+    compile 'com.tencent.bugly:crashreport_upgrade:1.3.5'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:3.3.1'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    //umeng统计
+    compile 'com.umeng.sdk:common:latest.integration'
+    compile 'com.umeng.sdk:analytics:latest.integration'
+    implementation project(':lottie-react-native')
+    implementation project(':jcore-react-native')
+    implementation project(':jpush-react-native')
+}
+
+// Run this once to be able to run the application with BUCK
+// puts all compile dependencies into folder libs for BUCK to use
+//task copyDownloadableDepsToLibs(type: Copy) {
+//    from configurations.compile
+//    into 'libs'
+//}

@@ -1,0 +1,39 @@
+{
+  "name": "悠然一指",
+  "displayName": "悠然一指",
+  "output": {
+    "android": "android/app/src/main/assets",
+    "ios": "ios",
+    "web": "/"
+  },
+  "expo": {
+    "name": "悠然一指",
+    "slug": "yryz app",
+    "sdkVersion": "27.0.0",
+    "packagerOpts": {
+      "assetExts": [
+        "ttf"
+      ]
+    }
+  },
+  "showFunctionMonitorView": true,
+  "webBaseUrl": "http://m-dev.yryz.com",
+  "sinaAppKey": "3849078579",
+  "sinaAppSecret": "73b8afd99da3d2d492ecb1f2b2140419",
+  "sinaRedirectUri": "https://www.yryz.com/",
+  "wechatAppId": "wxf7ece255b91036cd",
+  "wechatAppSecret": "846846225ca5d040ec7c25a253daedac",
+  "qqAppId": "101352714",
+  "qqAppKey": "934400e4c9646ccf5025a4df96bf1c45",
+  "iOS_buglyAppId": "75f8d6eb2f",
+  "android_buglyAppId": "2c2da76959",
+  "zhugeAppKey": "115d08b8e4a74ce2a0d641924058246f",
+  "android_umAppKey": "575511f7e0f55a414e00035a",
+  "ios_umAppKey": "5755132367e58e42cb0015fe",
+  "httpBaseUrl": "http://yryz-dev.yryz.com/yryz",
+  "jpushAppKey": "ff209cfbd67a228f1f58b7dd",
+  "apsForProduction": false,
+  "build": "dev",
+  "ossUrl": "http://cdn-qa.yryz.com",
+  "ossBucketName": "yryz-resources-qa"
+}

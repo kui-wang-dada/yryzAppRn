@@ -1,0 +1,68 @@
+{
+	"name": "yryz_app",
+	"version": "0.0.1",
+	"private": true,
+	"main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+	"scripts": {
+		"configureJPush": "node node_modules/jpush-react-native/JPushConfiguration.js",
+		"expo": "react-native-scripts start",
+		"test": "jest",
+		"android": "react-native run-android",
+		"ios": "react-native run-ios --simulator \"iPhone 8\"",
+		"start": "react-native start",
+		"env": "node ./config/env.js",
+		"lint": "eslint --ext .js,.jsx -f src/",
+		"lint:report": "yarn lint -f html -o ./eslint-report.html || open ./eslint-report.html",
+		"pod:update": "cd ios; pod update"
+	},
+	"dependencies": {
+		"axios": "^0.16.2",
+		"expo": "^23.0.0",
+		"jcore-react-native": "^1.1.8-beta2",
+		"jpush-react-native": "^2.1.0",
+		"lodash": "^4.17.4",
+		"lottie-react-native": "^2.5.0",
+		"md5": "^2.2.1",
+		"moment": "^2.19.1",
+		"react": "16.3.1",
+		"react-native": "^0.55.4",
+		"react-native-cli": "^2.0.1",
+		"react-native-code-push": "^5.3.4",
+		"react-native-elements": "^0.19.1",
+		"react-native-image-gallery": "^2.1.5",
+		"react-native-linear-gradient": "^2.4.0",
+		"react-native-modal": "^6.1.0",
+		"react-native-rk-pull-to-refresh": "^1.2.1",
+		"react-native-svg": "^6.0.1-rc.1",
+		"react-native-swiper": "^1.5.12",
+		"react-native-tab-view": "^1.0.2",
+		"react-native-vector-icons": "^4.6.0",
+		"react-navigation": "^2.1.0",
+		"react-redux": "^5.0.7",
+		"redux-persist": "^5.9.1",
+		"ydk-android": "git+http://frontend:frontend@192.168.30.4/js/ydk-android.git#0.0.19",
+		"ydk-ios": "git+http://frontend:frontend@192.168.30.4/js/ydk-ios.git#0.0.13",
+		"ydk-react-native": "git+http://frontend:frontend@192.168.30.4/js/ydk-react-native.git#0.0.20"
+	},
+	"devDependencies": {
+		"@types/react": "^16.0.18",
+		"@types/react-dom": "^16.0.2",
+		"@types/react-native": "^0.49.2",
+		"babel-eslint": "^8.0.0",
+		"babel-plugin-transform-decorators-legacy": "^1.3.4",
+		"babel-plugin-transform-exponentiation-operator": "^6.24.1",
+		"babel-plugin-transform-export-extensions": "^6.22.0",
+		"eslint": "^4.7.2",
+		"eslint-plugin-react": "^7.10.0",
+		"find-babel-config": "^1.1.0",
+		"path-to-regexp": "^2.0.0",
+		"react-native-scripts": "1.3.1",
+		"react-test-renderer": "16.0.0-alpha.12",
+		"resolve": "^1.5.0"
+	},
+	"rnpm": {
+		"assets": [
+			"./js/assets/fonts"
+		]
+	}
+}
